@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In</title>
+  <link rel="stylesheet" href="./sign_in_up_forgot.css">
+</head>
+
+<body>
+  <!-- Background Video  -->
+  <video autoplay muted loop id="bgVideo">
+    <source src="./blackBg.mp4" type="video/mp4">
+    Your browser does not support HTML5 video.
+  </video>
+
+  <!-- Signin container -->
+  <div class="container">
+    <h2>Sign in to <span>FlavorQuest-</span> Recipe Finder</h2>
+    <form id="signInForm">
+      <label for="email">Email address</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required>
+
+      <button type="submit">Sign In</button>
+    </form>
+    <p class="footer">
+      Don’t have an account? <a href="./signup.html">Sign up</a>
+    </p>
+    <p class="footer">
+      <a href="./forgot.html">Forgot password?</a>
+    </p>
+
+  </div>
+
+  <script>
+    // signin form :
+    document.getElementById('signInForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      if (!email || !password) {
+        alert('Please fill in both fields.');
+        return;
+      }
+
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+
+      const matchedUser = users.find(user => user.email === email && user.password === password);
+
+      if (matchedUser) {
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userEmail', matchedUser.email);
+        window.location.href = 'home.html';
+      } else {
+        alert('Invalid email or password.');
+      }
+    });
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forgot Password</title>
+  <link rel="stylesheet" href="./sign_in_up_forgot.css">
+</head>
+
+<body>
+  <!-- Background Video -->
+  <video autoplay muted loop id="bgVideo">
+    <source src="./blackBg.mp4" type="video/mp4">
+    Your browser does not support HTML5 video.
+  </video>
+
+  <!-- Forgot container -->
+  <div class="container">
+    <h2>Forgot Password</h2>
+    <input type="email" id="email" placeholder="Enter your email" required>
+    <input type="password" id="newPassword" placeholder="New password" required>
+    <input type="password" id="confirmPassword" placeholder="Confirm password" required>
+    <button onclick="resetPassword()">Reset Password</button>
+  </div>
+
+  <script>
+    // strong Passwords generator :
+    function isStrongPassword(password) {
+      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%*?&#^]{8,}$/;
+      return regex.test(password);
+    }
+    // Reset Passwords :
+    function resetPassword() {
+      const email = document.getElementById('email').value;
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (!email || !newPassword || !confirmPassword) {
+        alert("All fields are required.");
+        return;
+      }
+
+      if (newPassword !== confirmPassword) {
+        alert("Passwords do not match.");
+        return;
+      }
+
+      if (!isStrongPassword(newPassword)) {
+        alert("Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.");
+        return;
+      }
+
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const userIndex = users.findIndex(u => u.email === email);
+
+      if (userIndex === -1) {
+        alert("No user found with this email.");
+        return;
+      }
+      // New Passwords
+      users[userIndex].password = newPassword;
+      localStorage.setItem('users', JSON.stringify(users));
+      alert("Password reset successful. Please sign in.");
+      window.location.href = "signin.html";
+    }
+  </script>
+</body>
+
+</html>

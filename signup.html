@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="./sign_in_up_forgot.css">
+</head>
+
+<body>
+    <!-- Background Video -->
+    <video autoplay muted loop id="bgVideo">
+        <source src="./blackBg.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+    </video>
+
+    <!-- Form Container -->
+    <div class="container">
+        <h2>Create your <span>FlavorQuest-</span> Recipe Finder Account</h2>
+        <form id="signUpForm">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" required />
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required />
+
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required />
+
+            <button type="submit">Sign Up</button>
+        </form>
+        <p class="footer">
+            Already have an account? <a href="signin.html">Sign in</a>
+        </p>
+    </div>
+
+    <script>
+        // Strong Password :
+        function isStrongPassword(password) {
+            const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%*?&#^]{8,}$/;
+            return regex.test(password);
+        }
+        // Sign Up Form :
+        document.getElementById('signUpForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (!email || !password || !confirmPassword) {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match.');
+                return;
+            }
+
+            if (!isStrongPassword(password)) {
+                alert('Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.');
+                return;
+            }
+
+            // Get existing users or empty array
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+
+            // Check if email already exists
+            const exists = users.some(user => user.email === email);
+            if (exists) {
+                alert('An account with this email already exists.');
+                return;
+            }
+
+            // Add new user
+            users.push({ email, password });
+            localStorage.setItem('users', JSON.stringify(users));
+
+            alert('Registration successful! Please sign in.');
+            window.location.href = 'signin.html';
+        });
+    </script>
+
+</body>
+
+</html>

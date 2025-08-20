@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FlavorQuest</title>
+    <link rel="stylesheet" href="./homeStyle.css" />
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <!-- Dark Mode Toggal -->
+            <button id="darkToggle" class="darkMode" onclick="toggleDarkMode()">🌙</button>
+
+            <!-- Menu Toggle Button for Mobile -->
+            <button id="menuToggle" class="menu-icon" onclick="toggleMenu()">☰</button>
+
+            <!-- Logout button -->
+            <button id="logout" onclick="logout()">Log Out</button>
+
+        </div>
+
+        <!-- Navigation / Controls -->
+        <div class="controls search" id="navMenu">
+            <div class="control-box">
+                <input type="text" id="search" placeholder="Enter ingredient..." />
+                <button onclick="fetchRecipes()">Search</button>
+
+                <select id="category" onchange="fetchByCategory()">
+                    <option value="">Select Category</option>
+                </select>
+
+                <button onclick="showFavorites()">Show Favorites</button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section>
+            <!-- Heading and random recipe -->
+            <div class="maincontainer">
+                <div class="main-text">
+                    <h1>FlavorQuest-<span>Recipe Finder</span></h1>
+
+                    <h3>"Where every recipe is a journey, and every bite is a destination! 🤤"</h3>
+                </div>
+                <div id="randomRecipe"></div>
+            </div>
+        </section>
+
+        <!-- favourite container -->
+        <div id="favoritesSection" style="display: none;">
+            <h2>Favorites</h2>
+            <div id="favoritesList"></div>
+            <button onclick="closeFavorites()">Close Favorites</button>
+        </div>
+        <div>
+            <!-- recipes -->
+            <div id="recipes"></div>
+        </div>
+
+        <!-- recipes Details -->
+        <div id="recipeDetails" class="hidden"></div>
+
+        <!-- loading spinner -->
+        <div id="loader" class="hidden"></div>
+
+        <script src="./homeScripts.js"></script>
+
+    </main>
+    <footer class="footer">
+        <p>© 2025 FlourQuest Design By Anu Bharti. All Rights Reserved</p>
+    </footer>
+</body>
+
+</html>
